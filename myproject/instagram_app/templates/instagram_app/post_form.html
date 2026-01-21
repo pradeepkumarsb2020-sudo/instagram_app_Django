@@ -1,0 +1,121 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Post</title>
+    <style>
+        /* Full-page gradient background */
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        /* Floating post card */
+        .post-card {
+            background-color: #fff;
+            width: 100%;
+            max-width: 450px;
+            padding: 25px 30px;
+            border-radius: 20px;
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .post-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 18px 35px rgba(0, 0, 0, 0.25);
+        }
+
+        h2 {
+            text-align: center;
+            color: #262626;
+            font-weight: 500;
+            margin-bottom: 20px;
+        }
+
+        /* Caption textarea */
+        textarea {
+            width: 100%;
+            border: 1px solid #dbdbdb;
+            border-radius: 15px;
+            padding: 12px 15px;
+            font-size: 14px;
+            resize: none;
+            outline: none;
+            height: 80px;
+            box-sizing: border-box;
+            transition: box-shadow 0.3s;
+        }
+
+        textarea::placeholder {
+            color: #999;
+        }
+
+        textarea:focus {
+            box-shadow: 0 0 5px rgba(0, 149, 246, 0.5);
+        }
+
+        /* File input */
+        input[type="file"] {
+            width: 100%;
+            padding: 8px 12px;
+            margin-top: 12px;
+            border: 1px solid #dbdbdb;
+            border-radius: 12px;
+            font-size: 14px;
+        }
+
+        /* Submit button */
+        button {
+            width: 100%;
+            background-color: #0095f6;
+            color: #fff;
+            border: none;
+            padding: 12px 0;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            margin-top: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        button:hover {
+            background-color: #0073cc;
+            transform: translateY(-2px);
+        }
+
+        /* Responsive */
+        @media screen and (max-width: 500px) {
+            .post-card {
+                padding: 20px;
+                border-radius: 15px;
+            }
+            textarea {
+                height: 70px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="post-card">
+        <h2>Create Post</h2>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <textarea name="caption" placeholder="Write a caption..."></textarea>
+            <input type="file" name="image">
+            <button type="submit">Post</button>
+        </form>
+    </div>
+</body>
+
+</html>

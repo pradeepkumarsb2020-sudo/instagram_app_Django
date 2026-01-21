@@ -1,0 +1,117 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Comment</title>
+    <style>
+        /* Full page gradient background */
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: linear-gradient(135deg, #fdfbfb, #ebedee);
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Card container */
+        .comment-card {
+            background-color: #fff;
+            padding: 25px 30px;
+            border-radius: 20px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .comment-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #262626;
+            font-weight: 500;
+        }
+
+        /* Form styling */
+        form {
+            display: flex;
+            align-items: center;
+        }
+
+        textarea {
+            flex: 1;
+            border: none;
+            resize: none;
+            padding: 12px 15px;
+            border-radius: 25px;
+            font-size: 14px;
+            outline: none;
+            height: 40px;
+            background-color: #f5f5f5;
+            transition: background 0.3s;
+        }
+
+        textarea:focus {
+            background-color: #fff;
+            box-shadow: 0 0 5px rgba(0, 149, 246, 0.5);
+        }
+
+        textarea::placeholder {
+            color: #999;
+        }
+
+        button {
+            background-color: transparent;
+            border: none;
+            color: #0095f6;
+            font-weight: bold;
+            margin-left: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        button:hover {
+            color: #0073cc;
+        }
+
+        button:disabled {
+            color: #b2dffc;
+            cursor: default;
+        }
+
+        /* Responsive for smaller screens */
+        @media screen and (max-width: 480px) {
+            .comment-card {
+                padding: 20px;
+            }
+
+            textarea {
+                height: 35px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="comment-card">
+        <h2>Add Comment</h2>
+        <form method="post">
+            {% csrf_token %}
+            <textarea name="text" placeholder="Add a comment..."></textarea>
+            <button type="submit">Post</button>
+        </form>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,151 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Feed</title>
+    <style>
+        /* Full-page gradient background */
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+            margin: 0;
+            padding: 20px 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .feed-container {
+            width: 100%;
+            max-width: 600px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #262626;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        /* Add post link */
+        a.add-post {
+            display: block;
+            text-align: center;
+            margin-bottom: 20px;
+            text-decoration: none;
+            color: #0095f6;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        a.add-post:hover {
+            text-decoration: underline;
+        }
+
+        /* Post card styling */
+        .post-card {
+            background-color: #fff;
+            border-radius: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .post-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Post header */
+        .post-header {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            font-weight: bold;
+            font-size: 15px;
+            border-bottom: 1px solid #efefef;
+        }
+
+        /* Post image */
+        .post-image {
+            width: 100%;
+            max-height: 400px;
+            object-fit: cover;
+        }
+
+        /* Post caption */
+        .post-caption {
+            padding: 10px 15px;
+            font-size: 14px;
+            color: #262626;
+        }
+
+        /* Post actions */
+        .post-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 15px;
+            font-size: 14px;
+            border-top: 1px solid #efefef;
+        }
+
+        .post-actions a {
+            color: #0095f6;
+            text-decoration: none;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        .post-actions a:hover {
+            text-decoration: underline;
+        }
+
+        .likes {
+            font-weight: bold;
+        }
+
+        /* Alternate card style for subtle variation */
+        .post-card:nth-child(even) {
+            background-color: #fcfcfc;
+        }
+
+        /* Responsive */
+        @media screen and (max-width: 600px) {
+            .feed-container {
+                width: 95%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="feed-container">
+        <h2>Instagram Feed</h2>
+        <a class="add-post" href="{% url 'post_add' %}">+ Add Post</a>
+
+        {% for post in posts %}
+        <div class="post-card">
+            <div class="post-header">{{ post.user.username }}</div>
+            {% if post.image %}
+            <img class="post-image" src="{{ post.image.url }}">
+            {% endif %}
+            <div class="post-caption">{{ post.caption }}</div>
+            <div class="post-actions">
+                <span class="likes">❤️ {{ post.likes.count }}</span>
+                <div>
+                    <a href="{% url 'like_post' post.id %}">Like/Unlike</a>
+                    <a href="{% url 'post_detail' post.id %}">View</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p style="text-align:center; color:#888;">No posts yet</p>
+        {% endfor %}
+    </div>
+</body>
+
+</html>

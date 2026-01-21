@@ -1,0 +1,153 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post</title>
+    <style>
+        /* Full page gradient background */
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        /* Post card */
+        .post-container {
+            width: 100%;
+            max-width: 500px;
+            background-color: #fff;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .post-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Header */
+        .post-header {
+            padding: 15px;
+            font-weight: bold;
+            font-size: 16px;
+            border-bottom: 1px solid #eee;
+        }
+
+        /* Caption */
+        .post-caption {
+            padding: 10px 15px;
+            font-size: 14px;
+        }
+
+        /* Image */
+        .post-image {
+            width: 100%;
+            max-height: 400px;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Comments section */
+        .comments {
+            padding: 10px 15px;
+            border-top: 1px solid #eee;
+            max-height: 150px;
+            overflow-y: auto;
+        }
+
+        .comments p {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+
+        .comments p b {
+            margin-right: 5px;
+        }
+
+        .comments::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .comments::-webkit-scrollbar-thumb {
+            background-color: #bbb;
+            border-radius: 10px;
+        }
+
+        .comments::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        /* Add comment form */
+        .add-comment-form {
+            display: flex;
+            padding: 10px 15px;
+            border-top: 1px solid #eee;
+            background-color: #fafafa;
+        }
+
+        .add-comment-form textarea {
+            flex: 1;
+            border: none;
+            resize: none;
+            padding: 10px 15px;
+            border-radius: 25px;
+            font-size: 14px;
+            outline: none;
+            height: 40px;
+            background-color: #fff;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .add-comment-form textarea::placeholder {
+            color: #999;
+        }
+
+        .add-comment-form button {
+            background-color: transparent;
+            border: none;
+            color: #0095f6;
+            font-weight: bold;
+            margin-left: 10px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .add-comment-form button:disabled {
+            color: #b2dffc;
+            cursor: default;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="post-container">
+        <div class="post-header">{{ post.user.username }}</div>
+        <div class="post-caption">{{ post.caption }}</div>
+        {% if post.image %}
+        <img class="post-image" src="{{ post.image.url }}">
+        {% endif %}
+        <div class="comments">
+            {% for c in post.comments.all %}
+            <p><b>{{ c.user.username }}</b>: {{ c.text }}</p>
+            {% empty %}
+            <p>No comments</p>
+            {% endfor %}
+        </div>
+        <form class="add-comment-form" method="post" action="{% url 'add_comment' post.id %}">
+            {% csrf_token %}
+            <textarea name="text" placeholder="Add a comment..."></textarea>
+            <button type="submit">Post</button>
+        </form>
+    </div>
+</body>
+
+</html>
